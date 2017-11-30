@@ -99,7 +99,77 @@ def one_away(string, string2)
   end
 end
 
-puts one_away("pale", "ple") == true
-puts one_away("pales", "pale") == true
-puts one_away("pale", "bale") == true
-puts one_away("pale", "bake") == false
+# puts one_away("pale", "ple") == true
+# puts one_away("pales", "pale") == true
+# puts one_away("pale", "bale") == true
+# puts one_away("pale", "bake") == false
+
+# 1.6 compresses a string using the counts of each letter. ie. aabcccccaaa -> a2b1c5a3
+def compress_string(string)
+  compressed_string = ""
+  i = 0
+
+  while i < string.length
+    current_letter = string[i]
+    count = 0
+    while string[i] == current_letter
+      count += 1
+      i += 1
+    end
+    compressed_string += current_letter + count.to_s
+  end
+
+  compressed_string
+end
+
+# puts compress_string("aaaabbbbcccccccccaa") == "a4b4c9a2"
+# puts compress_string("abbbccdddaaddddddddd") == "a1b3c2d3a2d9"
+
+# 1.7 given an image represented by an NxN matrix, write a method to rotate the image by 90 degrees
+
+# 1.8 write an algorithm such that if an element in an MxN matrix is 0, its row and column is set to 0
+def zero_matrix(matrix)
+  zeroes = find_zeroes(matrix)
+
+  zeroes.each do |coordinates|
+    # set row to zero
+    i = 0
+    while i < matrix.length
+      matrix[coordinates[0]][i] = 0
+      i += 1
+    end
+
+    # set column to zero
+    j = 0
+    while j < matrix[0].length
+      matrix[j][coordinates[1]] = 0
+      j += 1
+    end
+
+  end
+  matrix
+end
+
+def find_zeroes(matrix)
+  result = []
+  x = 0
+  while x < matrix.length
+    y = 0
+    while y < matrix[x].length
+      if matrix[x][y] == 0
+        result << [x, y]
+      end
+      y += 1
+    end
+    x += 1
+  end
+  result
+end
+
+p zero_matrix([[1, 2, 3],
+              [4, 0, 6],
+              [7, 8, 9]])
+
+p zero_matrix([[1, 2, 0],
+              [4, 5, 6],
+              [7, 8, 9]])
